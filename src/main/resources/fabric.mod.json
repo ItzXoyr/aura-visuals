@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"id": "auravisuals",
+	"version": "${version}",
+	"name": "Aura Visuals",
+	"description": "Effetti visivi 'shader-like' con particelle volanti ambientali e ad aura, colori completamente personalizzabili da un menu in-game.",
+	"authors": [
+		"Francesco"
+	],
+	"contact": {},
+	"license": "MIT",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.auravisuals.AuraVisualsClient"
+		]
+	},
+	"mixins": [],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"fabric-api": "*",
+		"minecraft": "~1.21.1",
+		"java": ">=21"
+	}
+}

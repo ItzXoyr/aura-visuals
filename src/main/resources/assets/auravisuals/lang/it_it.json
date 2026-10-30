@@ -1,0 +1,16 @@
+{
+	"key.auravisuals.open_config": "Apri menu Aura Visuals",
+	"key.category.auravisuals": "Aura Visuals",
+
+	"auravisuals.config.title": "Impostazioni Aura Visuals",
+	"auravisuals.config.ambient.toggle": "Particelle ambientali",
+	"auravisuals.config.aura.toggle": "Particelle aura",
+	"auravisuals.config.ambient.color": "Colore ambientale (hex)",
+	"auravisuals.config.aura.color": "Colore aura (hex)",
+	"auravisuals.config.density": "Densità",
+	"auravisuals.config.speed": "Velocità",
+	"auravisuals.config.save": "Salva e chiudi",
+	"auravisuals.config.cancel": "Annulla",
+	"auravisuals.config.on": "ATTIVO",
+	"auravisuals.config.off": "DISATTIVO"
+}
