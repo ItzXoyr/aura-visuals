@@ -5,6 +5,9 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,17 +24,48 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Build
-        run: gradle build --stacktrace
+        id: build
+        shell: bash
+        run: |
+          set +e
+          gradle build --stacktrace > build-output.log 2>&1
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          tail -c 60000 build-output.log
+          exit 0
 
-      - name: Upload compiled jar
+      # Commit the raw log and the compiled jar (if any) straight back into the repo,
+      # so they're reachable over plain git instead of the Actions artifact/blob storage.
+      - name: Commit build log and jar
+        shell: bash
+        run: |
+          mkdir -p ci/dist
+          rm -f ci/dist/*.jar
+          cp build-output.log ci/build-output.log
+          find build/libs -name '*.jar' -exec cp {} ci/dist/ \; 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ci
+          git commit -m "ci: build log + jar [skip ci]" || echo "Nothing to commit"
+          git push
+
+      - name: Fail job if gradle build failed
+        shell: bash
+        run: |
+          if [ "${{ steps.build.outputs.exit_code }}" != "0" ]; then
+            echo "Gradle build failed with exit code ${{ steps.build.outputs.exit_code }}"
+            exit 1
+          fi
+
+      - name: Upload compiled jar (artifact, optional convenience)
+        if: steps.build.outputs.exit_code == '0'
         uses: actions/upload-artifact@v4
         with:
           name: aura-visuals-jar
           path: build/libs/*.jar
 
-      # Optional: also attaches the jar to a GitHub Release when you push a tag like "v1.0.0".
       - name: Attach to release
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: steps.build.outputs.exit_code == '0' && startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: build/libs/*.jar
