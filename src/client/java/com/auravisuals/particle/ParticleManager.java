@@ -5,6 +5,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.text.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
@@ -40,6 +43,11 @@ public class ParticleManager {
 
 	private double ambientCarry = 0.0;
 
+	// --- Temporary debug instrumentation, to diagnose "nothing shows up" reports. ---
+	private static final Logger LOGGER = LoggerFactory.getLogger("AuraVisuals");
+	private int debugTickCounter = 0;
+	private boolean announcedOnce = false;
+
 	private ParticleManager() {
 	}
 
@@ -52,16 +60,35 @@ public class ParticleManager {
 			return;
 		}
 
+		if (!announcedOnce) {
+			announcedOnce = true;
+			player.sendMessage(Text.literal("[AuraVisuals] Mod attivo. ambient=" + config.ambientEnabled
+					+ " aura=" + config.auraEnabled + " density=" + config.density), false);
+			LOGGER.info("AuraVisuals active. ambientEnabled={} auraEnabled={} density={} ambientColor={} auraColor={}",
+					config.ambientEnabled, config.auraEnabled, config.density,
+					Integer.toHexString(config.ambientColor), Integer.toHexString(config.auraColor));
+		}
+
+		int ambientSpawned = 0;
+		int auraSpawned = 0;
+
 		if (config.ambientEnabled) {
-			tickAmbient(world, player, config);
+			ambientSpawned = tickAmbient(world, player, config);
 		}
 
 		if (config.auraEnabled) {
-			tickAura(world, player, config);
+			auraSpawned = tickAura(world, player, config);
+		}
+
+		debugTickCounter++;
+		if (debugTickCounter >= 100) { // ~5 seconds
+			debugTickCounter = 0;
+			LOGGER.info("AuraVisuals tick: ambientSpawnedThisTick={} auraSpawnedThisTick={} playerPos=({}, {}, {})",
+					ambientSpawned, auraSpawned, player.getX(), player.getY(), player.getZ());
 		}
 	}
 
-	private void tickAmbient(ClientWorld world, ClientPlayerEntity player, ModConfig config) {
+	private int tickAmbient(ClientWorld world, ClientPlayerEntity player, ModConfig config) {
 		DustParticleEffect effect = dust(config.ambientColor, 1.1f);
 
 		// Fractional spawn-rate accumulator so low densities don't just round down to zero.
@@ -82,9 +109,10 @@ public class ParticleManager {
 
 			world.addParticleClient(effect, x, y, z, vx, vy, vz);
 		}
+		return toSpawn;
 	}
 
-	private void tickAura(ClientWorld world, ClientPlayerEntity player, ModConfig config) {
+	private int tickAura(ClientWorld world, ClientPlayerEntity player, ModConfig config) {
 		int count = Math.max(0, Math.round(BASE_AURA_COUNT * config.density));
 		ensureAuraSlots(count);
 
@@ -100,6 +128,7 @@ public class ParticleManager {
 			// (gravity/drag) moving it away from the orbit path in the meantime.
 			world.addParticleClient(effect, x, y, z, 0.0, 0.0, 0.0);
 		}
+		return count;
 	}
 
 	private void ensureAuraSlots(int count) {
