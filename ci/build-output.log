@@ -24,7 +24,7 @@ Cannot remap modifiers because it does not exist in any of the targets [] or the
 > Task :remapSourcesJar
 > Task :assemble
 > Task :build
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1793405194414.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1793448087596.json
 
 [Incubating] Problems report is available at: file:///home/runner/work/aura-visuals/aura-visuals/build/reports/problems/problems-report.html
 
@@ -34,5 +34,5 @@ You can use '--warning-mode all' to show the individual deprecation warnings and
 
 For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
 
-BUILD SUCCESSFUL in 1m 2s
+BUILD SUCCESSFUL in 45s
 7 actionable tasks: 7 executed
