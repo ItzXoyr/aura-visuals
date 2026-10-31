@@ -3,16 +3,21 @@ package com.auravisuals.particle;
 import com.auravisuals.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.particle.DustParticleEffect;
+import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
- * Simulates both particle "visual styles":
- *  - AMBIENT: particles drifting slowly in the air around the player, like dust/magic motes.
- *  - AURA: particles orbiting tightly around the player, like a shader aura.
- * Rendering is handled separately by ParticleRenderer.
+ * Spawns Minecraft's own built-in "dust" particle (the same effect used for redstone dust /
+ * sniffer eggs / brushable blocks, which takes an arbitrary RGB color) instead of rendering
+ * custom geometry ourselves. Letting vanilla own the actual rendering means we don't depend on
+ * Minecraft's internal rendering pipeline internals, which change significantly between versions.
+ *
+ *  - AMBIENT: a steady trickle of motes spawned in a radius around the player, drifting slowly.
+ *  - AURA: particles continuously re-spawned along an orbit path around the player, which (since
+ *    each one only needs to live a couple of ticks) reads visually as a ring/aura orbiting them.
  */
 public class ParticleManager {
 
@@ -23,128 +28,114 @@ public class ParticleManager {
 	}
 
 	private final Random random = new Random();
-	private final List<FloatingParticle> ambientParticles = new ArrayList<>();
-	private final List<FloatingParticle> auraParticles = new ArrayList<>();
 
-	private static final int BASE_AMBIENT_TARGET = 60;
-	private static final int BASE_AURA_TARGET = 24;
-	private static final double AMBIENT_RADIUS = 6.0;
+	// Persistent per-slot orbit state for the aura particles.
+	private double[] auraAngle = new double[0];
+	private double[] auraRadius = new double[0];
+	private double[] auraHeight = new double[0];
+	private double[] auraSpeed = new double[0];
+
+	private static final double BASE_AMBIENT_PER_TICK = 1.2;
+	private static final int BASE_AURA_COUNT = 16;
+	private static final double AMBIENT_RADIUS = 4.0;
+
+	private double ambientCarry = 0.0;
 
 	private ParticleManager() {
-	}
-
-	public List<FloatingParticle> getAmbientParticles() {
-		return ambientParticles;
-	}
-
-	public List<FloatingParticle> getAuraParticles() {
-		return auraParticles;
 	}
 
 	public void tick(MinecraftClient client) {
 		ModConfig config = ModConfig.get();
 		ClientPlayerEntity player = client.player;
+		ClientWorld world = client.world;
 
-		if (player == null) {
-			ambientParticles.clear();
-			auraParticles.clear();
+		if (player == null || world == null) {
 			return;
 		}
 
 		if (config.ambientEnabled) {
-			tickAmbient(player, config);
-		} else {
-			ambientParticles.clear();
+			tickAmbient(world, player, config);
 		}
 
 		if (config.auraEnabled) {
-			tickAura(player, config);
-		} else {
-			auraParticles.clear();
+			tickAura(world, player, config);
 		}
 	}
 
-	private void tickAmbient(ClientPlayerEntity player, ModConfig config) {
-		int target = Math.max(0, Math.round(BASE_AMBIENT_TARGET * config.density));
+	private void tickAmbient(ClientWorld world, ClientPlayerEntity player, ModConfig config) {
+		DustParticleEffect effect = dust(config.ambientColor, 1.1f);
 
-		// Spawn new particles up to target.
-		while (ambientParticles.size() < target) {
-			FloatingParticle p = new FloatingParticle(FloatingParticle.Kind.AMBIENT);
+		// Fractional spawn-rate accumulator so low densities don't just round down to zero.
+		ambientCarry += BASE_AMBIENT_PER_TICK * config.density;
+		int toSpawn = (int) ambientCarry;
+		ambientCarry -= toSpawn;
 
+		for (int i = 0; i < toSpawn; i++) {
 			double angle = random.nextDouble() * Math.PI * 2;
 			double dist = random.nextDouble() * AMBIENT_RADIUS;
-			p.x = player.getX() + Math.cos(angle) * dist;
-			p.y = player.getY() + random.nextDouble() * 4.0;
-			p.z = player.getZ() + Math.sin(angle) * dist;
+			double x = player.getX() + Math.cos(angle) * dist;
+			double y = player.getY() + random.nextDouble() * 2.5;
+			double z = player.getZ() + Math.sin(angle) * dist;
 
-			double driftSpeed = (0.004 + random.nextDouble() * 0.006) * config.speed;
-			double driftAngle = random.nextDouble() * Math.PI * 2;
-			p.velX = Math.cos(driftAngle) * driftSpeed;
-			p.velZ = Math.sin(driftAngle) * driftSpeed;
-			p.velY = (0.002 + random.nextDouble() * 0.004) * config.speed;
+			double vx = (random.nextDouble() - 0.5) * 0.01 * config.speed;
+			double vy = 0.004 * config.speed;
+			double vz = (random.nextDouble() - 0.5) * 0.01 * config.speed;
 
-			p.size = 0.045f + random.nextFloat() * 0.05f;
-			p.maxAge = 100 + random.nextInt(140);
-			p.age = 0;
-
-			ambientParticles.add(p);
-		}
-
-		for (int i = ambientParticles.size() - 1; i >= 0; i--) {
-			FloatingParticle p = ambientParticles.get(i);
-			p.x += p.velX;
-			p.y += p.velY;
-			p.z += p.velZ;
-			p.age++;
-
-			// Gently wobble horizontally so it doesn't look like it's rising in a straight line.
-			p.velX += (random.nextDouble() - 0.5) * 0.0006 * config.speed;
-			p.velZ += (random.nextDouble() - 0.5) * 0.0006 * config.speed;
-
-			double dx = p.x - player.getX();
-			double dz = p.z - player.getZ();
-			if (p.isDead() || (dx * dx + dz * dz) > (AMBIENT_RADIUS * 2.0) * (AMBIENT_RADIUS * 2.0)) {
-				ambientParticles.remove(i);
-			}
+			world.addParticle(effect, x, y, z, vx, vy, vz);
 		}
 	}
 
-	private void tickAura(ClientPlayerEntity player, ModConfig config) {
-		int target = Math.max(0, Math.round(BASE_AURA_TARGET * config.density));
+	private void tickAura(ClientWorld world, ClientPlayerEntity player, ModConfig config) {
+		int count = Math.max(0, Math.round(BASE_AURA_COUNT * config.density));
+		ensureAuraSlots(count);
 
-		while (auraParticles.size() < target) {
-			FloatingParticle p = new FloatingParticle(FloatingParticle.Kind.AURA);
-			p.orbitAngle = random.nextDouble() * Math.PI * 2;
-			p.orbitRadius = 0.9 + random.nextDouble() * 0.7;
-			p.orbitHeight = random.nextDouble() * 2.0;
-			p.orbitSpeed = (0.03 + random.nextDouble() * 0.03) * config.speed * (random.nextBoolean() ? 1 : -1);
-			p.size = 0.035f + random.nextFloat() * 0.035f;
-			p.maxAge = 9999; // aura particles live as long as they're needed; we recycle instead of killing.
-			p.age = 1;
+		DustParticleEffect effect = dust(config.auraColor, 0.9f);
 
-			updateAuraPosition(player, p);
-			auraParticles.add(p);
-		}
+		for (int i = 0; i < count; i++) {
+			auraAngle[i] += auraSpeed[i] * config.speed;
+			double x = player.getX() + Math.cos(auraAngle[i]) * auraRadius[i];
+			double y = player.getY() + 0.2 + auraHeight[i];
+			double z = player.getZ() + Math.sin(auraAngle[i]) * auraRadius[i];
 
-		while (auraParticles.size() > target) {
-			auraParticles.remove(auraParticles.size() - 1);
-		}
-
-		for (FloatingParticle p : auraParticles) {
-			p.orbitAngle += p.orbitSpeed;
-			if (p.age < 20) p.age++; // just for the fade-in on (re)spawn
-			updateAuraPosition(player, p);
+			// Zero velocity: we re-place it next tick ourselves, we don't want vanilla physics
+			// (gravity/drag) moving it away from the orbit path in the meantime.
+			world.addParticle(effect, x, y, z, 0.0, 0.0, 0.0);
 		}
 	}
 
-	private void updateAuraPosition(ClientPlayerEntity player, FloatingParticle p) {
-		p.x = player.getX() + Math.cos(p.orbitAngle) * p.orbitRadius;
-		p.z = player.getZ() + Math.sin(p.orbitAngle) * p.orbitRadius;
-		p.y = player.getY() + 0.2 + p.orbitHeight;
+	private void ensureAuraSlots(int count) {
+		if (auraAngle.length == count) {
+			return;
+		}
+
+		double[] newAngle = new double[count];
+		double[] newRadius = new double[count];
+		double[] newHeight = new double[count];
+		double[] newSpeed = new double[count];
+
+		int reuse = Math.min(count, auraAngle.length);
+		System.arraycopy(auraAngle, 0, newAngle, 0, reuse);
+		System.arraycopy(auraRadius, 0, newRadius, 0, reuse);
+		System.arraycopy(auraHeight, 0, newHeight, 0, reuse);
+		System.arraycopy(auraSpeed, 0, newSpeed, 0, reuse);
+
+		for (int i = reuse; i < count; i++) {
+			newAngle[i] = random.nextDouble() * Math.PI * 2;
+			newRadius[i] = 0.9 + random.nextDouble() * 0.7;
+			newHeight[i] = random.nextDouble() * 2.0;
+			newSpeed[i] = (0.05 + random.nextDouble() * 0.05) * (random.nextBoolean() ? 1 : -1);
+		}
+
+		auraAngle = newAngle;
+		auraRadius = newRadius;
+		auraHeight = newHeight;
+		auraSpeed = newSpeed;
 	}
 
-	/** Alpha for aura particles doesn't use maxAge the same way as ambient; small fade-in only. */
-	public float auraAlpha(FloatingParticle p) {
-		return Math.min(1f, p.age / 20f);
+	private DustParticleEffect dust(int rgb, float scale) {
+		float r = ((rgb >> 16) & 0xFF) / 255f;
+		float g = ((rgb >> 8) & 0xFF) / 255f;
+		float b = (rgb & 0xFF) / 255f;
+		return new DustParticleEffect(new Vector3f(r, g, b), scale);
 	}
 }
