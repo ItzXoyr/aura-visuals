@@ -5,7 +5,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DustParticleEffect;
-import org.joml.Vector3f;
 
 import java.util.Random;
 
@@ -81,7 +80,7 @@ public class ParticleManager {
 			double vy = 0.004 * config.speed;
 			double vz = (random.nextDouble() - 0.5) * 0.01 * config.speed;
 
-			world.addParticle(effect, x, y, z, vx, vy, vz);
+			world.addParticle(effect, true, false, x, y, z, vx, vy, vz);
 		}
 	}
 
@@ -99,7 +98,7 @@ public class ParticleManager {
 
 			// Zero velocity: we re-place it next tick ourselves, we don't want vanilla physics
 			// (gravity/drag) moving it away from the orbit path in the meantime.
-			world.addParticle(effect, x, y, z, 0.0, 0.0, 0.0);
+			world.addParticle(effect, true, false, x, y, z, 0.0, 0.0, 0.0);
 		}
 	}
 
@@ -133,9 +132,7 @@ public class ParticleManager {
 	}
 
 	private DustParticleEffect dust(int rgb, float scale) {
-		float r = ((rgb >> 16) & 0xFF) / 255f;
-		float g = ((rgb >> 8) & 0xFF) / 255f;
-		float b = (rgb & 0xFF) / 255f;
-		return new DustParticleEffect(new Vector3f(r, g, b), scale);
+		// 1.21.11's DustParticleEffect takes a packed 0xRRGGBB color directly, not a Vector3f.
+		return new DustParticleEffect(rgb, scale);
 	}
 }
