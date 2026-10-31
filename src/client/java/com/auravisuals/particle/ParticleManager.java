@@ -80,7 +80,7 @@ public class ParticleManager {
 			double vy = 0.004 * config.speed;
 			double vz = (random.nextDouble() - 0.5) * 0.01 * config.speed;
 
-			world.addParticle(effect, true, false, x, y, z, vx, vy, vz);
+			world.addParticleClient(effect, x, y, z, vx, vy, vz);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class ParticleManager {
 
 			// Zero velocity: we re-place it next tick ourselves, we don't want vanilla physics
 			// (gravity/drag) moving it away from the orbit path in the meantime.
-			world.addParticle(effect, true, false, x, y, z, 0.0, 0.0, 0.0);
+			world.addParticleClient(effect, x, y, z, 0.0, 0.0, 0.0);
 		}
 	}
 
