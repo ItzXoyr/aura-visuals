@@ -2,10 +2,7 @@ Starting a Gradle Daemon (subsequent builds will be faster)
 
 > Configure project :
 Fabric Loom: 1.17.17
-Previous process has disowned the lock due to abrupt termination.
-Found existing cache lock file (ACQUIRED_PREVIOUS_OWNER_DISOWNED), rebuilding loom cache. This may have been caused by a failed or canceled build.
 
-Cannot remap modifiers because it does not exist in any of the targets [] or their parents.
 Cannot remap modifiers because it does not exist in any of the targets [] or their parents.
 
 > Task :compileJava NO-SOURCE
@@ -13,97 +10,36 @@ Cannot remap modifiers because it does not exist in any of the targets [] or the
 > Task :classes
 
 > Task :compileClientJava
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:10: error: cannot find symbol
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-                                                  ^
-  symbol:   class WorldRenderEvents
-  location: package net.fabricmc.fabric.api.client.rendering.v1
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:5: error: cannot find symbol
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-                                                  ^
-  symbol:   class WorldRenderContext
-  location: package net.fabricmc.fabric.api.client.rendering.v1
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:7: error: cannot find symbol
-import net.minecraft.client.render.BufferRenderer;
-                                  ^
-  symbol:   class BufferRenderer
-  location: package net.minecraft.client.render
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:10: error: cannot find symbol
-import net.minecraft.client.render.VertexFormat;
-                                  ^
-  symbol:   class VertexFormat
-  location: package net.minecraft.client.render
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:27: error: cannot find symbol
-	public static void render(WorldRenderContext context) {
-	                          ^
-  symbol:   class WorldRenderContext
-  location: class ParticleRenderer
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:29: error: incompatible types: String cannot be converted to Category
-				"key.category.auravisuals"
-				^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:33: error: package WorldRenderEvents does not exist
-		WorldRenderEvents.AFTER_TRANSLUCENT.register(ParticleRenderer::render);
-		                 ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:48: error: cannot find symbol
-		RenderSystem.enableBlend();
-		            ^
-  symbol:   method enableBlend()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:50: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
-				com.mojang.blaze3d.platform.GlStateManager.SrcFactor.SRC_ALPHA,
-				                                          ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:51: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
-				com.mojang.blaze3d.platform.GlStateManager.DstFactor.ONE); // additive glow
-				                                          ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:52: error: cannot find symbol
-		RenderSystem.depthMask(false);
-		            ^
-  symbol:   method depthMask(boolean)
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:53: error: cannot find symbol
-		RenderSystem.disableCull();
-		            ^
-  symbol:   method disableCull()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:54: error: invalid method reference
-		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-		                       ^
-  cannot find symbol
-    symbol:   method getPositionColorProgram()
-    location: class GameRenderer
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:57: error: package VertexFormat does not exist
-		BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-		                                                     ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:76: error: cannot find symbol
-		BufferRenderer.drawWithGlobalProgram(buffer.end());
-		^
-  symbol:   variable BufferRenderer
-  location: class ParticleRenderer
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:78: error: cannot find symbol
-		RenderSystem.depthMask(true);
-		            ^
-  symbol:   method depthMask(boolean)
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:79: error: cannot find symbol
-		RenderSystem.enableCull();
-		            ^
-  symbol:   method enableCull()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:80: error: cannot find symbol
-		RenderSystem.defaultBlendFunc();
-		            ^
-  symbol:   method defaultBlendFunc()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:81: error: cannot find symbol
-		RenderSystem.disableBlend();
-		            ^
-  symbol:   method disableBlend()
-  location: class RenderSystem
+/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:84: error: no suitable method found for addParticle(DustParticleEffect,double,double,double,double,double,double)
+			world.addParticle(effect, x, y, z, vx, vy, vz);
+			     ^
+    method ClientWorld.addParticle(BlockPos,BlockState,ParticleEffect,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(BlockPos,ParticleEffect,VoxelShape,double) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(double,double,double,double,double,ParticleEffect) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(ParticleEffect,boolean,boolean,double,double,double,double,double,double) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:102: error: no suitable method found for addParticle(DustParticleEffect,double,double,double,double,double,double)
+			world.addParticle(effect, x, y, z, 0.0, 0.0, 0.0);
+			     ^
+    method ClientWorld.addParticle(BlockPos,BlockState,ParticleEffect,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(BlockPos,ParticleEffect,VoxelShape,double) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(double,double,double,double,double,ParticleEffect) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(ParticleEffect,boolean,boolean,double,double,double,double,double,double) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:139: error: incompatible types: Vector3f cannot be converted to int
+		return new DustParticleEffect(new Vector3f(r, g, b), scale);
+		                              ^
 Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
-19 errors
+3 errors
 
 > Task :compileClientJava FAILED
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1793404633578.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1793404993805.json
 
 [Incubating] Problems report is available at: file:///home/runner/work/aura-visuals/aura-visuals/build/reports/problems/problems-report.html
 
@@ -112,94 +48,33 @@ FAILURE: Build failed with an exception.
 * What went wrong:
 Execution failed for task ':compileClientJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
 > Compilation failed; see the compiler output below.
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:10: error: cannot find symbol
-  import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-                                                    ^
-    symbol:   class WorldRenderEvents
-    location: package net.fabricmc.fabric.api.client.rendering.v1
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:5: error: cannot find symbol
-  import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-                                                    ^
-    symbol:   class WorldRenderContext
-    location: package net.fabricmc.fabric.api.client.rendering.v1
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:7: error: cannot find symbol
-  import net.minecraft.client.render.BufferRenderer;
-                                    ^
-    symbol:   class BufferRenderer
-    location: package net.minecraft.client.render
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:10: error: cannot find symbol
-  import net.minecraft.client.render.VertexFormat;
-                                    ^
-    symbol:   class VertexFormat
-    location: package net.minecraft.client.render
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:27: error: cannot find symbol
-  	public static void render(WorldRenderContext context) {
-  	                          ^
-    symbol:   class WorldRenderContext
-    location: class ParticleRenderer
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:76: error: cannot find symbol
-  		BufferRenderer.drawWithGlobalProgram(buffer.end());
-  		^
-    symbol:   variable BufferRenderer
-    location: class ParticleRenderer
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:29: error: incompatible types: String cannot be converted to Category
-  				"key.category.auravisuals"
-  				^
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:33: error: package WorldRenderEvents does not exist
-  		WorldRenderEvents.AFTER_TRANSLUCENT.register(ParticleRenderer::render);
-  		                 ^
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:50: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
-  				com.mojang.blaze3d.platform.GlStateManager.SrcFactor.SRC_ALPHA,
-  				                                          ^
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:51: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
-  				com.mojang.blaze3d.platform.GlStateManager.DstFactor.ONE); // additive glow
-  				                                          ^
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:57: error: package VertexFormat does not exist
-  		BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-  		                                                     ^
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:48: error: cannot find symbol
-  		RenderSystem.enableBlend();
-  		            ^
-    symbol:   method enableBlend()
-    location: class RenderSystem
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:52: error: cannot find symbol
-  		RenderSystem.depthMask(false);
-  		            ^
-    symbol:   method depthMask(boolean)
-    location: class RenderSystem
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:53: error: cannot find symbol
-  		RenderSystem.disableCull();
-  		            ^
-    symbol:   method disableCull()
-    location: class RenderSystem
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:78: error: cannot find symbol
-  		RenderSystem.depthMask(true);
-  		            ^
-    symbol:   method depthMask(boolean)
-    location: class RenderSystem
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:79: error: cannot find symbol
-  		RenderSystem.enableCull();
-  		            ^
-    symbol:   method enableCull()
-    location: class RenderSystem
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:80: error: cannot find symbol
-  		RenderSystem.defaultBlendFunc();
-  		            ^
-    symbol:   method defaultBlendFunc()
-    location: class RenderSystem
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:81: error: cannot find symbol
-  		RenderSystem.disableBlend();
-  		            ^
-    symbol:   method disableBlend()
-    location: class RenderSystem
-  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:54: error: invalid method reference
-  		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-  		                       ^
-    cannot find symbol
-      symbol:   method getPositionColorProgram()
-      location: class GameRenderer
+  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:84: error: no suitable method found for addParticle(DustParticleEffect,double,double,double,double,double,double)
+  			world.addParticle(effect, x, y, z, vx, vy, vz);
+  			     ^
+      method ClientWorld.addParticle(BlockPos,BlockState,ParticleEffect,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method ClientWorld.addParticle(BlockPos,ParticleEffect,VoxelShape,double) is not applicable
+        (actual and formal argument lists differ in length)
+      method ClientWorld.addParticle(double,double,double,double,double,ParticleEffect) is not applicable
+        (actual and formal argument lists differ in length)
+      method ClientWorld.addParticle(ParticleEffect,boolean,boolean,double,double,double,double,double,double) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:102: error: no suitable method found for addParticle(DustParticleEffect,double,double,double,double,double,double)
+  			world.addParticle(effect, x, y, z, 0.0, 0.0, 0.0);
+  			     ^
+      method ClientWorld.addParticle(BlockPos,BlockState,ParticleEffect,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method ClientWorld.addParticle(BlockPos,ParticleEffect,VoxelShape,double) is not applicable
+        (actual and formal argument lists differ in length)
+      method ClientWorld.addParticle(double,double,double,double,double,ParticleEffect) is not applicable
+        (actual and formal argument lists differ in length)
+      method ClientWorld.addParticle(ParticleEffect,boolean,boolean,double,double,double,double,double,double) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:139: error: incompatible types: Vector3f cannot be converted to int
+  		return new DustParticleEffect(new Vector3f(r, g, b), scale);
+  		                              ^
   Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
-  19 errors
+  3 errors
 
 * Try:
 > Check your code and dependencies to fix the compilation error(s)
@@ -233,127 +108,36 @@ org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':compile
 	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:475)
 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:392)
-	at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:118)
-	at org.gradle.execution.DefaultBuildWorkExecutor.executePlan(DefaultBuildWorkExecutor.java:143)
-	at org.gradle.execution.DefaultBuildWorkExecutor.displayOrExecutePlan(DefaultBuildWorkExecutor.java:128)
-	at org.gradle.execution.DefaultBuildWorkExecutor$1.call(DefaultBuildWorkExecutor.java:79)
-	at org.gradle.execution.DefaultBuildWorkExecutor$1.call(DefaultBuildWorkExecutor.java:75)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
-	at org.gradle.execution.DefaultBuildWorkExecutor.execute(DefaultBuildWorkExecutor.java:75)
-	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$0(DefaultBuildLifecycleController.java:323)
-	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:324)
-	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$0(StateTransitionController.java:235)
-	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:45)
-	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:235)
-	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:314)
-	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:207)
-	at org.gradle.internal.work.DefaultWorkerLeaseService.lambda$runAndReleaseLocks$0(DefaultWorkerLeaseService.java:296)
-	at org.gradle.internal.work.ResourceLockStatistics$1.measure(ResourceLockStatistics.java:43)
-	at org.gradle.internal.work.DefaultWorkerLeaseService.runAndReleaseLocks(DefaultWorkerLeaseService.java:294)
-	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocksAcquired(DefaultWorkerLeaseService.java:290)
-	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:282)
-	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:132)
-	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:182)
-	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:199)
-	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
-	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:199)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:65)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
 Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler output below.
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:10: error: cannot find symbol
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-                                                  ^
-  symbol:   class WorldRenderEvents
-  location: package net.fabricmc.fabric.api.client.rendering.v1
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:5: error: cannot find symbol
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-                                                  ^
-  symbol:   class WorldRenderContext
-  location: package net.fabricmc.fabric.api.client.rendering.v1
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:7: error: cannot find symbol
-import net.minecraft.client.render.BufferRenderer;
-                                  ^
-  symbol:   class BufferRenderer
-  location: package net.minecraft.client.render
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:10: error: cannot find symbol
-import net.minecraft.client.render.VertexFormat;
-                                  ^
-  symbol:   class VertexFormat
-  location: package net.minecraft.client.render
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:27: error: cannot find symbol
-	public static void render(WorldRenderContext context) {
-	                          ^
-  symbol:   class WorldRenderContext
-  location: class ParticleRenderer
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:29: error: incompatible types: String cannot be converted to Category
-				"key.category.auravisuals"
-				^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/AuraVisualsClient.java:33: error: package WorldRenderEvents does not exist
-		WorldRenderEvents.AFTER_TRANSLUCENT.register(ParticleRenderer::render);
-		                 ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:48: error: cannot find symbol
-		RenderSystem.enableBlend();
-		            ^
-  symbol:   method enableBlend()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:50: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
-				com.mojang.blaze3d.platform.GlStateManager.SrcFactor.SRC_ALPHA,
-				                                          ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:51: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
-				com.mojang.blaze3d.platform.GlStateManager.DstFactor.ONE); // additive glow
-				                                          ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:52: error: cannot find symbol
-		RenderSystem.depthMask(false);
-		            ^
-  symbol:   method depthMask(boolean)
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:53: error: cannot find symbol
-		RenderSystem.disableCull();
-		            ^
-  symbol:   method disableCull()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:54: error: invalid method reference
-		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-		                       ^
-  cannot find symbol
-    symbol:   method getPositionColorProgram()
-    location: class GameRenderer
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:57: error: package VertexFormat does not exist
-		BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-		                                                     ^
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:76: error: cannot find symbol
-		BufferRenderer.drawWithGlobalProgram(buffer.end());
-		^
-  symbol:   variable BufferRenderer
-  location: class ParticleRenderer
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:78: error: cannot find symbol
-		RenderSystem.depthMask(true);
-		            ^
-  symbol:   method depthMask(boolean)
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:79: error: cannot find symbol
-		RenderSystem.enableCull();
-		            ^
-  symbol:   method enableCull()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:80: error: cannot find symbol
-		RenderSystem.defaultBlendFunc();
-		            ^
-  symbol:   method defaultBlendFunc()
-  location: class RenderSystem
-/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleRenderer.java:81: error: cannot find symbol
-		RenderSystem.disableBlend();
-		            ^
-  symbol:   method disableBlend()
-  location: class RenderSystem
+/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:84: error: no suitable method found for addParticle(DustParticleEffect,double,double,double,double,double,double)
+			world.addParticle(effect, x, y, z, vx, vy, vz);
+			     ^
+    method ClientWorld.addParticle(BlockPos,BlockState,ParticleEffect,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(BlockPos,ParticleEffect,VoxelShape,double) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(double,double,double,double,double,ParticleEffect) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(ParticleEffect,boolean,boolean,double,double,double,double,double,double) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:102: error: no suitable method found for addParticle(DustParticleEffect,double,double,double,double,double,double)
+			world.addParticle(effect, x, y, z, 0.0, 0.0, 0.0);
+			     ^
+    method ClientWorld.addParticle(BlockPos,BlockState,ParticleEffect,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(BlockPos,ParticleEffect,VoxelShape,double) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(double,double,double,double,double,ParticleEffect) is not applicable
+      (actual and formal argument lists differ in length)
+    method ClientWorld.addParticle(ParticleEffect,boolean,boolean,double,double,double,double,double,double) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/aura-visuals/aura-visuals/src/client/java/com/auravisuals/particle/ParticleManager.java:139: error: incompatible types: Vector3f cannot be converted to int
+		return new DustParticleEffect(new Vector3f(r, g, b), scale);
+		                              ^
 Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
-19 errors
+3 errors
 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:88)
 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:49)
 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:98)
@@ -485,7 +269,7 @@ Note: Some messages have been simplified; recompile with -Xdiags:verbose to get 
 	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:38)
 	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:68)
 	at org.gradle.api.internal.tasks.execution.DefaultTaskNodeExecutor.doExecute(DefaultTaskNodeExecutor.java:364)
-	... 55 more
+	... 25 more
 
 
 Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
@@ -494,5 +278,5 @@ You can use '--warning-mode all' to show the individual deprecation warnings and
 
 For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
 
-BUILD FAILED in 1m 4s
+BUILD FAILED in 35s
 2 actionable tasks: 2 executed
